@@ -1,4 +1,4 @@
-package com.springboot.rest.webservices.restwebservices;
+package com.springboot.rest.webservices.restwebservices.helloWorld;
 
 public class HelloWorldBean {
 	
