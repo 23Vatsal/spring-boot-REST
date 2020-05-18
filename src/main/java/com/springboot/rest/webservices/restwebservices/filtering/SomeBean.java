@@ -1,14 +1,16 @@
 package com.springboot.rest.webservices.restwebservices.filtering;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+@JsonFilter("SomeBeanFilter")
 public class SomeBean {
 
 	private String field1;
 	private String field2;
 	
 	//so that it is not sent in response
-	@JsonIgnore
+	//@JsonIgnore
 	private String field3;
 	
 	public SomeBean(String field1, String field2, String field3) {
