@@ -2,7 +2,6 @@ package com.springboot.rest.webservices.restwebservices.user;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -20,30 +19,27 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 
 @RestController
-public class UserController {
+public class UserJPAController {
 	
 	@Autowired
 	private UserDaoService userDaoService;
 	
-	@Autowired
-	private UserRepository userRepository;
-	
-	@GetMapping("/jpa/users")
+	@GetMapping("/users")
 	public List<User> getAllUsers(){
-		return userRepository.findAll();
+		return userDaoService.findAll();
 	}
 	
-	@GetMapping("/jpa/users/{id}")
-	public Optional<User> getOneUser(@PathVariable int id) {
-		Optional<User> user= userRepository.findById(id);
-		if(!user.isPresent()) {
+	@GetMapping("/users/{id}")
+	public User getOneUser(@PathVariable int id) {
+		User user= userDaoService.findOne(id);
+		if(user==null) {
 			throw new UserNotFoundException("id=> "+id);
 		}
 	    
 		return user;
 	}
 	
-	@DeleteMapping("/jpa/users/{id}")
+	@DeleteMapping("/users/{id}")
 	public void deleteUser(@PathVariable int id) {
 		User user= userDaoService.deleteById(id);
 		if(user==null) {
@@ -52,7 +48,7 @@ public class UserController {
 
 	}
 	
-	@PostMapping("/jpa/users")
+	@PostMapping("/users")
 	public ResponseEntity<Object> createUser(@Valid @RequestBody User user) {
 		User savedUser=userDaoService.save(user);
 		
