@@ -22,8 +22,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RestController
 public class UserController {
 	
-	@Autowired
-	private UserDaoService userDaoService;
 	
 	@Autowired
 	private UserRepository userRepository;
@@ -45,16 +43,14 @@ public class UserController {
 	
 	@DeleteMapping("/jpa/users/{id}")
 	public void deleteUser(@PathVariable int id) {
-		User user= userDaoService.deleteById(id);
-		if(user==null) {
-			throw new UserNotFoundException("id=> "+id);
-		}
+		userRepository.deleteById(id);
+		
 
 	}
 	
 	@PostMapping("/jpa/users")
 	public ResponseEntity<Object> createUser(@Valid @RequestBody User user) {
-		User savedUser=userDaoService.save(user);
+		User savedUser=userRepository.save(user);
 		
 		//show that user is created.
 		//return http response code also
