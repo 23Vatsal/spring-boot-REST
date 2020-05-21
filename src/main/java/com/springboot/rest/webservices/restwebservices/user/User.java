@@ -1,10 +1,12 @@
 package com.springboot.rest.webservices.restwebservices.user;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
@@ -26,6 +28,10 @@ public class User {
 	@Past
 	@ApiModelProperty(notes = "Date cannot be in the future")
 	private Date dob;
+	
+	@OneToMany(mappedBy = "user")
+	private List<Post> posts;
+	
 	public User(Integer id, String name, Date dob) {
 		this.id = id;
 		this.name = name;
@@ -58,6 +64,16 @@ public class User {
 
 	public void setDob(Date dob) {
 		this.dob = dob;
+	}
+	
+	
+
+	public List<Post> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(List<Post> posts) {
+		this.posts = posts;
 	}
 
 	@Override
